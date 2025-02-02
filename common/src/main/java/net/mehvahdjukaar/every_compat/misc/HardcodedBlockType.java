@@ -38,8 +38,11 @@ public class HardcodedBlockType {
 
 
             /// ========== INCLUDE ========== \\\
-        // blocks of The-Twilight-Forest's Mangrove aren't generated from Multiple SupportedMods
-        if (isWoodRegistryOf("", "q|c|hnhome|vf", "", "twilightforest:mangrove", "")) return false;
+        // Refurbished-Furniture's oak_table wasn't generated due to Dawn-Of-Time's waxed_oak_table
+        if (isWoodRegistryOf("", "rfm", "", "dawnoftimebuilder:waxed_oak", "")) return false;
+
+        // Minecraft has "mangrove" that caused the generation of blocks with The-Twilight-Forest's mangrove to be skipped.
+        if (isWoodRegistryOf("", "", "", "twilightforest:mangrove", "")) return false;
 
         // chests & ladders from Quark aren't generated with Abnormal's Wood mods
         if (isWoodRegistryOf("quark", "", "upgrade_aquatic|autumnity|atmospheric|environmental", "", "")) return false;
@@ -63,17 +66,8 @@ public class HardcodedBlockType {
         //ecologics and quark azalea. tbh not sure why needed
         if (isWoodRegistryOf("quark", "", "", "ecologics:azalea", "")) return false;
 
-        // what's the reason for below? | hardcoding
-        if (isWoodRegistryOf("", "af", "", "", "")) return false;
-
-        // Valhelsia Structure's blocks must be not be discarded
-        if (isWoodRegistryOf("", "vs", "", "", "")) return false;
-
         // we always register everything for these (mehvahdjukaar)
         if (isWoodRegistryOf("", "abnww", "architects_palette", "", "")) return false;
-
-        // if (this.shortenedId().equals("ap")) return false; //hardcoding dont remember why i had this. Incase you want o
-        if (isWoodRegistryOf("", "ap", "", "", "")) return false;
 
         return null;
     }

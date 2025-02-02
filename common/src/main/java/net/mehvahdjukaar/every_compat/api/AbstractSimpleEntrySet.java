@@ -28,6 +28,7 @@ import net.mehvahdjukaar.moonlight.api.set.BlockType;
 import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.moonlight.api.util.math.colors.RGBColor;
+import net.mehvahdjukaar.moonlight.core.misc.McMetaFile;
 import net.minecraft.client.resources.metadata.animation.AnimationMetadataSection;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -40,6 +41,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.InputStream;
@@ -52,7 +54,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 //contrary to popular belief this class is indeed not simple. Its usage however is
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "removal"})
 public abstract class AbstractSimpleEntrySet<T extends BlockType, B extends Block, I extends Item> implements EntrySet<T> {
 
     protected static final ResourceLocation NO_TAB_MARKER = new ResourceLocation("none");
@@ -79,7 +81,7 @@ public abstract class AbstractSimpleEntrySet<T extends BlockType, B extends Bloc
     protected final Map<ResourceLocation, Set<ResourceKey<?>>> tags = new HashMap<>();
     protected final Set<Supplier<ResourceLocation>> recipeLocations = new HashSet<>();
     protected final Set<TextureInfo> textures = new HashSet<>();
-    protected final BiFunction<T, ResourceManager, Pair<List<Palette>, @Nullable AnimationMetadataSection>> paletteSupplier;
+    protected final BiFunction<T, ResourceManager, Pair<List<Palette>, @Nullable McMetaFile>> paletteSupplier;
     @Nullable
     protected final Consumer<BlockTypeResTransformer<T>> extraModelTransform;
 
@@ -92,7 +94,7 @@ public abstract class AbstractSimpleEntrySet<T extends BlockType, B extends Bloc
                                      Supplier<T> baseType,
                                      Supplier<ResourceKey<CreativeModeTab>> tab,
                                      TabAddMode tabMode,
-                                     BiFunction<T, ResourceManager, Pair<List<Palette>, @Nullable AnimationMetadataSection>> paletteSupplier,
+                                     BiFunction<T, ResourceManager, Pair<List<Palette>, @Nullable McMetaFile>> paletteSupplier,
                                      @Nullable Consumer<BlockTypeResTransformer<T>> extraTransform,
                                      boolean mergePalette, boolean copyTint,
                                      Predicate<T> condition) {
@@ -339,8 +341,9 @@ public abstract class AbstractSimpleEntrySet<T extends BlockType, B extends Bloc
                 // if (!ModConfigs.isEntryEnabled(w, b)) continue;
                 ResourceLocation blockId = Utils.getID(b);
 
-                var pal = paletteSupplier.apply(w, manager); // return the texture of: WoodType: Planks, StoneType: stone, LeavesType: leaves
-                AnimationMetadataSection targetAnimation = pal.getSecond();
+                // return the texture of: WoodType: Planks, StoneType: stone, LeavesType: leaves
+                var pal = paletteSupplier.apply(w, manager);
+                McMetaFile targetAnimation = pal.getSecond();
                 List<Palette> targetPalette = pal.getFirst();
 
                 if (targetPalette == null) {
@@ -373,7 +376,8 @@ public abstract class AbstractSimpleEntrySet<T extends BlockType, B extends Bloc
                     for (var info : infoPerTextures.get(oldTextureId)) {
                         if (info != null) {
                             if (info.keepNamespace()) newId = oldTextureId.withPath(newPath).toString();
-                            else newId = new ResourceLocation(blockId.getNamespace(), newPath).toString();
+                            else
+                                newId = new ResourceLocation(blockId.getNamespace(), newPath).toString();
 
                             if (newId.isEmpty()) {
                                 EveryCompat.LOGGER.error("The path of new texture is empty for: {}", info.texture());
@@ -394,8 +398,7 @@ public abstract class AbstractSimpleEntrySet<T extends BlockType, B extends Bloc
                                     // Adding to the resources next to newtextures
                                     handler.dynamicPack.addJson(ResourceLocation.tryParse(newId), mcmetaFile, ResType.MCMETA);
                                     mcmetaStream.close();
-                                }
-                                else
+                                } else
                                     handler.getLogger().error("The MCMETA file may no longer existing, check @ {}", mcmetaLoc);
                             }
                         }
@@ -411,8 +414,8 @@ public abstract class AbstractSimpleEntrySet<T extends BlockType, B extends Bloc
             }
 
         } catch (Exception e) {
-            EveryCompat.LOGGER.error("Could not generate any block texture for entry set {} with {} : ",
-                    module == null ? "dummy" : module.modRes(this.getName()), baseType.get().getId(), e);
+            EveryCompat.LOGGER.error("Could not generate any block texture for entry set {}: {}",
+                    module == null ? "dummy" : module.modRes(this.getName()), e.getMessage());
         } finally {
             for (var t : images) {
                 t.close();
@@ -432,7 +435,7 @@ public abstract class AbstractSimpleEntrySet<T extends BlockType, B extends Bloc
         return textureSupplier;
     }
 
-    private static Pair<List<Palette>, @Nullable AnimationMetadataSection> getPaletteFromMainChild(BlockType w, ResourceManager manager) {
+    private static Pair<List<Palette>, @Nullable McMetaFile> getPaletteFromMainChild(BlockType w, ResourceManager manager) {
         var mainChild = w.mainChild();
         Block mainWoodTypeBlock = null;
         if (mainChild instanceof Block bb) mainWoodTypeBlock = bb;
@@ -444,7 +447,7 @@ public abstract class AbstractSimpleEntrySet<T extends BlockType, B extends Bloc
         try (TextureImage plankTexture = TextureImage.open(manager,
                 RPUtils.findFirstBlockTextureLocation(manager, mainWoodTypeBlock))) {
             var targetPalette = Palette.fromAnimatedImage(plankTexture);
-            var animation = plankTexture.getMetadata();
+            var animation = plankTexture.getMcMeta();
             return Pair.of(targetPalette, animation);
         } catch (Exception ignored) {
         }
@@ -461,7 +464,7 @@ public abstract class AbstractSimpleEntrySet<T extends BlockType, B extends Bloc
         protected final String prefix;
         protected Supplier<ResourceKey<CreativeModeTab>> tab = null;
         protected TabAddMode tabMode = TabAddMode.AFTER_SAME_TYPE;
-        protected BiFunction<T, ResourceManager, Pair<List<Palette>, @Nullable AnimationMetadataSection>> palette = AbstractSimpleEntrySet::getPaletteFromMainChild;
+        protected BiFunction<T, ResourceManager, Pair<List<Palette>, @Nullable McMetaFile>> palette = AbstractSimpleEntrySet::getPaletteFromMainChild;
         protected final Map<ResourceLocation, Set<ResourceKey<?>>> tags = new HashMap<>();
         protected final Set<Supplier<ResourceLocation>> recipes = new HashSet<>();
         protected final Set<TextureInfo> textures = new HashSet<>();
@@ -502,14 +505,20 @@ public abstract class AbstractSimpleEntrySet<T extends BlockType, B extends Bloc
         }
 
         // Exclude Leaves | Wood | Stone - exclusive with addCondition
-        public BL excludeBlockTypes(String modId, String... ids) {
+        public BL excludeBlockTypes(String regEx) {
+            this.addCondition(blockType -> !blockType.getId().toString().matches(regEx));
+            return (BL) this;
+        }
+
+        // Exclude Leaves | Wood | Stone - exclusive with addCondition
+        public BL excludeBlockTypes(String modId, String... typeIds) {
             StringBuilder regexBuilder = new StringBuilder();
 
             // create "biomesoplenty:(fir)" or "biomesoplenty:(fir|dead|...)
             regexBuilder.append(modId).append(":(");
-            for (int i = 0; i < ids.length; i++) {
-                regexBuilder.append(ids[i]);
-                if (i != (ids.length - 1)) regexBuilder.append("|"); // Don't append "|" to the last word's
+            for (int i = 0; i < typeIds.length; i++) {
+                regexBuilder.append(typeIds[i]);
+                if (i != (typeIds.length - 1)) regexBuilder.append("|"); // Don't append "|" to the last word's
             }
             regexBuilder.append(")");
 
@@ -578,12 +587,14 @@ public abstract class AbstractSimpleEntrySet<T extends BlockType, B extends Bloc
         }
 
         public BL addTexture(TextureInfo.Builder textureLoc) {
-            TextureInfo info = textureLoc.build();
-            this.textures.add(info);
-            if (info.keepNamespace()) {
-                //hack so we assure namespace has been added since it could be NOT Ec one
-                ClientDynamicResourcesHandler.INSTANCE.dynamicPack
-                        .addNamespaces(info.texture().getNamespace());
+            if (PlatHelper.getPhysicalSide().isClient()) {
+                TextureInfo info = textureLoc.build();
+                this.textures.add(info);
+                if (info.keepNamespace()) {
+                    //hack so we assure namespace has been added since it could be NOT Ec one
+                    ClientDynamicResourcesHandler.getInstance().dynamicPack
+                            .addNamespaces(info.texture().getNamespace());
+                }
             }
             return (BL) this;
         }
@@ -609,7 +620,7 @@ public abstract class AbstractSimpleEntrySet<T extends BlockType, B extends Bloc
         }
 
         //by default, they all use planks palette
-        public BL setPalette(BiFunction<T, ResourceManager, Pair<List<Palette>, @Nullable AnimationMetadataSection>> paletteProvider) {
+        public BL setPalette(BiFunction<T, ResourceManager, Pair<List<Palette>, @Nullable McMetaFile>> paletteProvider) {
             this.palette = paletteProvider;
             return (BL) this;
         }
@@ -620,7 +631,8 @@ public abstract class AbstractSimpleEntrySet<T extends BlockType, B extends Bloc
         }
 
         public BL createPaletteFromPlanks() {
-            return createPaletteFromPlanks(p -> {});
+            return createPaletteFromPlanks(p -> {
+            });
         }
 
         public BL createPaletteFromChild(Consumer<Palette> paletteTransform, String childKey) {
@@ -628,52 +640,57 @@ public abstract class AbstractSimpleEntrySet<T extends BlockType, B extends Bloc
         }
 
         public BL createPaletteFromChild(String childKey, Predicate<String> whichSide) {
-            return createPaletteFromChild(p -> {}, childKey, whichSide);
+            return createPaletteFromChild(p -> {
+            }, childKey, whichSide);
         }
 
         public BL createPaletteFromChild(String childKey) {
-            return createPaletteFromChild(p -> {}, childKey, null);
+            return createPaletteFromChild(p -> {
+            }, childKey, null);
         }
 
         public BL createPaletteFromChild(Consumer<Palette> paletteTransform, String childKey, Predicate<String> whichSide) {
-            return this.setPalette((blockType, m) -> {
-                var c = blockType.getChild(childKey);
-                if (c instanceof Block b) {
-                    if (whichSide != null) {
-                        try (TextureImage blockTexture = TextureImage.open(m,
-                                RPUtils.findFirstBlockTextureLocation(m, b, whichSide))) {
-
-                            List<Palette> targetPalette = Palette.fromAnimatedImage(blockTexture);
-                            targetPalette.forEach(paletteTransform);
-                            return Pair.of(targetPalette, blockTexture.getMetadata());
-                        } catch (Exception e) {
-                            throw new RuntimeException(String.format("Failed to generate palette for %s : %s", blockType, e));
-                        }
-                    } else { // whichSide should be defaulted to use top_texture -Xelbayria's assumption
-                        try (TextureImage plankTexture = TextureImage.open(m,
-                                RPUtils.findFirstBlockTextureLocation(m, b))) {
-
-                            List<Palette> targetPalette = Palette.fromAnimatedImage(plankTexture);
-                            targetPalette.forEach(paletteTransform);
-                            return Pair.of(targetPalette, plankTexture.getMetadata());
-                        } catch (Exception e) {
-                            throw new RuntimeException(String.format("Failed to generate palette for %s : %s", blockType, e));
-                        }
-                    }
-                } else if (c instanceof Item i) {
-                    try (TextureImage plankTexture = TextureImage.open(m,
-                            RPUtils.findFirstItemTextureLocation(m, i))) {
-
-                        List<Palette> targetPalette = Palette.fromAnimatedImage(plankTexture);
-                        targetPalette.forEach(paletteTransform);
-                        return Pair.of(targetPalette, plankTexture.getMetadata());
-                    } catch (Exception e) {
-                        throw new RuntimeException(String.format("Failed to generate palette for %s : %s", blockType, e));
-                    }
-                }
-                throw new RuntimeException("No child with key " + childKey + " found");
-            });
+            return this.setPalette((blockType, m) -> makePaletteFromChild(paletteTransform, childKey, whichSide, blockType, m));
         }
+    }
+
+    // utility function
+    public static <T extends BlockType> @NotNull Pair<List<Palette>, @Nullable McMetaFile> makePaletteFromChild(Consumer<Palette> paletteTransform, String childKey, Predicate<String> whichSide, T blockType, ResourceManager m) {
+        var child = blockType.getChild(childKey);
+        if (child instanceof Block b) {
+            if (whichSide != null) {
+                try (TextureImage blockTexture = TextureImage.open(m,
+                        RPUtils.findFirstBlockTextureLocation(m, b, whichSide))) {
+
+                    List<Palette> targetPalette = Palette.fromAnimatedImage(blockTexture);
+                    targetPalette.forEach(paletteTransform);
+                    return Pair.of(targetPalette, blockTexture.getMcMeta());
+                } catch (Exception e) {
+                    throw new RuntimeException(String.format("Failed to generate palette for %s : %s", blockType, e));
+                }
+            } else { // whichSide should be defaulted to use all_texture (like planks)  -Xelbayria's assumption
+                try (TextureImage plankTexture = TextureImage.open(m,
+                        RPUtils.findFirstBlockTextureLocation(m, b))) {
+
+                    List<Palette> targetPalette = Palette.fromAnimatedImage(plankTexture);
+                    targetPalette.forEach(paletteTransform);
+                    return Pair.of(targetPalette, plankTexture.getMcMeta());
+                } catch (Exception e) {
+                    throw new RuntimeException(String.format("Failed to generate palette for %s : %s", blockType, e));
+                }
+            }
+        } else if (child instanceof Item i) {
+            try (TextureImage plankTexture = TextureImage.open(m,
+                    RPUtils.findFirstItemTextureLocation(m, i))) {
+
+                List<Palette> targetPalette = Palette.fromAnimatedImage(plankTexture);
+                targetPalette.forEach(paletteTransform);
+                return Pair.of(targetPalette, plankTexture.getMcMeta());
+            } catch (Exception e) {
+                throw new RuntimeException(String.format("Failed to generate palette for %s : %s", blockType, e));
+            }
+        }
+        throw new RuntimeException("No child with key " + childKey + " found");
     }
 
 

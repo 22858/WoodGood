@@ -13,9 +13,16 @@ import org.apache.logging.log4j.Logger;
 
 public class ClientDynamicResourcesHandler extends DynClientResourcesGenerator {
 
-    public static final ClientDynamicResourcesHandler INSTANCE = new ClientDynamicResourcesHandler();
+    private static ClientDynamicResourcesHandler INSTANCE;
 
-    private static boolean init = false;
+    public static ClientDynamicResourcesHandler getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new ClientDynamicResourcesHandler();
+        }
+        return INSTANCE;
+    }
+
+    private boolean firstInit = false;
 
     public ClientDynamicResourcesHandler() {
         super(new DynamicTexturePack(EveryCompat.res("generated_pack")));
@@ -42,9 +49,9 @@ public class ClientDynamicResourcesHandler extends DynClientResourcesGenerator {
 
     @Override
     public void regenerateDynamicAssets(ResourceManager manager) {
-        if (!init) {
+        if (!firstInit) {
             SpriteHelper.addHardcodedSprites();
-            init = true;
+            firstInit = true;
         }
         this.dynamicPack.setGenerateDebugResources(PlatHelper.isDev() || ECConfigs.DEBUG_RESOURCES.get());
         EveryCompat.forAllModules(m -> {
