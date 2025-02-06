@@ -60,7 +60,7 @@ public class HardcodedBlockType {
         // Similar to above, Architect's Palette - boards will be skipped due to the existing boards in Autumnity
         if (isWoodRegistryOf("", "", "autumnity", "", "maple_boards")) return false;
 
-        // check if TerraFirmaCraft (tfc) mod exist, then won't discards wood types
+        // Ensure blocks to be generated because TerraFirmaCraft has similar name of vanilla woodType (oak, acacia, so on)
         if (isWoodRegistryOf("", "", "tfc", "", "")) return false;
 
         //ecologics and quark azalea. tbh not sure why needed
@@ -68,6 +68,9 @@ public class HardcodedBlockType {
 
         // we always register everything for these (mehvahdjukaar)
         if (isWoodRegistryOf("", "abnww", "architects_palette", "", "")) return false;
+
+        // Ensure the Architects-Palette's boards are generated with Abnormal mods (Upgrade Aquatic, Woodworks)
+        if (isWoodRegistryOf("architects_palette", "", "upgrade_aquatic|autumnity|atmospheric|environmental", "", "")) return false;
 
         return null;
     }
@@ -80,15 +83,16 @@ public class HardcodedBlockType {
         supportedBlockName = blockName;
         shortenedIdenfity = shortenedId;
 
-            //!! INCLUDE ==========
+                /// ========== EXCLUDE ========== \\\
+        // Traversable-Leaves' leaves is a testing item and should be excluded
+        if (isLeavesRegistryOf("", "", "", "traversable_leaves:dev_leaves", "")) return true;
+
+                /// ========== INCLUDE ========== \\\
         // Unrelated to Quark's ancient_leaves & Alex's Cave (ancient_leaves) should be included
         if (isLeavesRegistryOf("quark", "", "", "alexscaves:ancient", "")) return false;
 
         // Macaw's Fences&Walls or MrCrayFish's Furniture - hedges will be skipped because Quark already has hedges
         if (isLeavesRegistryOf("", "mcf|cfm", "quark", "", "")) return false;
-
-            //!! EXCLUDE ==========
-
 
         return null;
     }
