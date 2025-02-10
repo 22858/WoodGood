@@ -114,7 +114,7 @@ dependencies {
 //    modImplementation("net.mehvahdjukaar:moonlight-forge:${moonlight_testVersion}")
 
     //+ MAVEN
-    modImplementation("maven.modrinth:moonlight:forge_${moonlight_mavenVersion}") // v2.13.56
+    modImplementation("maven.modrinth:moonlight:forge_${moonlight_mavenVersion}") // v2.13.58
 
 //!! TOOLS ========================================================================================================== \\
     modRuntimeOnly("curse.maven:worldedit-225608:4586218")
@@ -148,7 +148,7 @@ dependencies {
 //    modRuntimeOnly("maven.modrinth:midnightlib:1.4.2-forge") // Building-But-Better
 //    modRuntimeOnly("com.tterrag.registrate:Registrate:${registrate_version}") // Create, The-Twilight-Forest, Tropicraft
 //    modRuntimeOnly("com.jozufozu.flywheel:flywheel-forge-${flywheel_version}") // Create
-//    modRuntimeOnly("com.teamresourceful.bytecodecs:bytecodecs-1.0.2") // Chipped
+    modRuntimeOnly("com.teamresourceful.bytecodecs:bytecodecs-1.0.2") // Chipped
 
     //+ REQUIRED - The modules access libraries from below - ONLY IN FORGE
     modCompileOnly("curse.maven:autoreglib-250363:3857246")
