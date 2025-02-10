@@ -180,7 +180,10 @@ public abstract class AbstractSimpleEntrySet<T extends BlockType, B extends Bloc
 
     @Override
     public void registerItemColors(ClientHelper.ItemColorEvent event) {
-        if (copyTint) ColoringUtils.copyBlockTint(event, blocks);
+        if (copyTint) {
+            ColoringUtils.copyBlockTint(event, blocks);
+            ColoringUtils.copyItemTint(event, items);
+        }
     }
 
     @Override
