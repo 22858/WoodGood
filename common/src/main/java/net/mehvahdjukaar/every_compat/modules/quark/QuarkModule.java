@@ -30,7 +30,6 @@ import net.mehvahdjukaar.moonlight.api.set.wood.WoodTypeRegistry;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.moonlight.api.util.math.colors.HCLColor;
 import net.mehvahdjukaar.moonlight.core.misc.McMetaFile;
-import net.minecraft.client.resources.metadata.animation.AnimationMetadataSection;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -75,8 +74,8 @@ public class QuarkModule extends SimpleModule {
     public final SimpleEntrySet<WoodType, Block> verticalPlanks;
     public final SimpleEntrySet<WoodType, Block> ladders;
     public final SimpleEntrySet<WoodType, Block> hollowLogs;
-    public final SimpleEntrySet<WoodType, ? extends VariantChestBlock> chests;
-    public final SimpleEntrySet<WoodType, ? extends VariantTrappedChestBlock> trappedChests;
+    public final SimpleEntrySet<WoodType, VariantChestBlock> chests;
+    public final SimpleEntrySet<WoodType, VariantTrappedChestBlock> trappedChests;
     public final SimpleEntrySet<LeavesType, Block> hedges;
     public final SimpleEntrySet<LeavesType, Block> leafCarpets;
 
