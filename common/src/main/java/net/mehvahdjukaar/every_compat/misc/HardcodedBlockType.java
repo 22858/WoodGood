@@ -58,10 +58,10 @@ public class HardcodedBlockType {
 
         // ArchitectPalette's boards will be skipped blc Upgrade-Aqautic already has boards but have no recipes &
         // no item in CreativeMode
-        if (isWoodRegistryOf("", "", "upgrade_aquatic", "", "driftwood_boards|river_boards")) return false;
+        if (isWoodRegistryOf("architects_palette", "", "upgrade_aquatic", "", "driftwood_boards|river_boards")) return false;
 
         // Similar to above, Architect's Palette - boards will be skipped due to the existing boards in Autumnity
-        if (isWoodRegistryOf("", "", "autumnity", "", "maple_boards")) return false;
+        if (isWoodRegistryOf("architects_palette", "", "autumnity", "", "maple_boards")) return false;
 
         // Ensure blocks to be generated because TerraFirmaCraft has similar name of vanilla woodType (oak, acacia, so on)
         if (isWoodRegistryOf("", "", "tfc", "", "")) return false;
