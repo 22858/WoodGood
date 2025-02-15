@@ -91,7 +91,7 @@ dependencies {
 //    modRuntimeOnly("curse.maven:camp-chair-531744:4579676")
 //    modRuntimeOnly("curse.maven:chipped-456956:4634858") // v3.0.1 | Athena, Resourceful-Lib, Forge-Config-Api-Port
 //    modRuntimeOnly("curse.maven:dawn-of-time-312359:5651253")
-//    modRuntimeOnly("curse.maven:decorative-blocks-362528:3941637")
+//    modRuntimeOnly("curse.maven:decorative-blocks-362528:5089408")
 //    modRuntimeOnly("curse.maven:exlines-bark-carpets-527296:4062547")
 //    modRuntimeOnly("curse.maven:farmers-delight-refabricated-993166:5215829")
 //    modRuntimeOnly("curse.maven:friends-and-foes-551364:4968876")
