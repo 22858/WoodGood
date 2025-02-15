@@ -41,6 +41,9 @@ public class HardcodedBlockType {
 
 
             /// ========== INCLUDE ========== \\\
+        // Quark's blocks with Caverns-And-Chasms' AZALEA aren't generated due to Quark's AZALEA
+        if (isWoodRegistryOf("quark", "", "caverns_and_chasms", "", "")) return false;
+
         // Refurbished-Furniture's oak_table wasn't generated due to Dawn-Of-Time's waxed_oak_table
         if (isWoodRegistryOf("", "rfm", "", "dawnoftimebuilder:waxed_oak", "")) return false;
 
