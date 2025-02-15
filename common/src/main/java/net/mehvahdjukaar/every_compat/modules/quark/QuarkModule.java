@@ -90,7 +90,7 @@ public class QuarkModule extends SimpleModule {
                         VerticalSlabsModule.class,
                         getModBlock("oak_vertical_slab"),
                         () -> WoodTypeRegistry.OAK_TYPE,
-                        (w) -> new VerticalSlabBlock(() -> w.getBlockOfThis("slab"), Utils.copyPropertySafe(w.planks))
+                        w -> new VerticalSlabBlock(() -> w.getBlockOfThis("slab"), Utils.copyPropertySafe(w.planks))
                 )
                 .requiresChildren("slab")
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
@@ -112,7 +112,7 @@ public class QuarkModule extends SimpleModule {
                         VariantBookshelvesModule.class,
                         getModBlock("acacia_bookshelf"),
                         () -> WoodTypeRegistry.getValue(new ResourceLocation("acacia")),
-                        (w) -> new VariantBookshelfBlock(shortenedId() + "/" + w.getAppendableId(),
+                        w -> new VariantBookshelfBlock(shortenedId() + "/" + w.getAppendableId(),
                                 null, w.canBurn(), w.getSound()))
                 .setTabKey(tab)
                 .setTabMode(TabAddMode.AFTER_SAME_WOOD)
@@ -130,15 +130,16 @@ public class QuarkModule extends SimpleModule {
                         WoodenPostsModule.class,
                         getModBlock("oak_post"),
                         () -> WoodTypeRegistry.OAK_TYPE,
-                        (w) -> {
+                        w -> {
                             Block fence = w.getBlockOfThis("fence");
-                            return new WoodPostBlock(null, fence, shortenedId() + "/" + w.getNamespace() + "/",
+                            return new WoodPostBlock(null, Objects.requireNonNull(fence), shortenedId() + "/" + w.getNamespace() + "/",
                                     Objects.requireNonNull(fence).getSoundType(fence.defaultBlockState()));
                         })
+                .requiresChildren("fence", "wood") //REASON: recipes
+                //TEXTURES: log
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .addTag(modRes("posts"), Registries.BLOCK)
                 .addTag(modRes("posts"), Registries.ITEM)
-                .requiresChildren("fence")
                 .setTabKey(tab)
                 .setTabMode(TabAddMode.AFTER_SAME_WOOD)
                 .addRecipe(modRes("building/crafting/oak_post"))
@@ -150,17 +151,18 @@ public class QuarkModule extends SimpleModule {
                         WoodenPostsModule.class,
                         getModBlock("stripped_oak_post"),
                         () -> WoodTypeRegistry.OAK_TYPE,
-                        (w) -> {
+                        w -> {
                             if (w.getNamespace().equals("malum") || w.getNamespace().equals("twigs")) return null;
                             Block fence = w.getBlockOfThis("fence");
                             // required stripped_log texture & fence as an ingredients
-                            return new WoodPostBlock(null, fence, shortenedId() + "/" + w.getNamespace() + "/stripped_",
+                            return new WoodPostBlock(null, Objects.requireNonNull(fence), shortenedId() + "/" + w.getNamespace() + "/stripped_",
                                     Objects.requireNonNull(fence).getSoundType(fence.defaultBlockState()));
                         })
+                .requiresChildren("fence", "stripped_log", "stripped_wood") //REASON: textures, recipes
+                //TEXTURES: stripped_log
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .addTag(modRes("posts"), Registries.BLOCK)
                 .addTag(modRes("posts"), Registries.ITEM)
-                .requiresChildren("fence", "stripped_log")
                 .setTabKey(tab)
                 .setTabMode(TabAddMode.AFTER_SAME_WOOD)
                 .addRecipe(modRes("building/crafting/stripped_oak_post"))
@@ -172,7 +174,7 @@ public class QuarkModule extends SimpleModule {
                         VerticalPlanksModule.class,
                         getModBlock("vertical_oak_planks"),
                         () -> WoodTypeRegistry.OAK_TYPE,
-                        (w) -> {
+                        w -> {
                             String name = shortenedId() + "/" + w.getVariantId("planks", "vertical");
                             return new ZetaBlock(name, null,
                                     BlockBehaviour.Properties.of()
@@ -198,7 +200,7 @@ public class QuarkModule extends SimpleModule {
                         VariantLaddersModule.class,
                         getModBlock("spruce_ladder"),
                         () -> WoodTypeRegistry.getValue(new ResourceLocation("spruce")),
-                        (w) -> new VariantLadderBlock(shortenedId() + "/" + w.getAppendableId(),
+                        w -> new VariantLadderBlock(shortenedId() + "/" + w.getAppendableId(),
                                 null, BlockBehaviour.Properties.copy(Blocks.LADDER).sound(w.getSound()), w.canBurn()))
                 .setTabKey(tab)
                 .setTabMode(TabAddMode.AFTER_SAME_WOOD)
@@ -215,7 +217,7 @@ public class QuarkModule extends SimpleModule {
                         HollowLogsModule.class,
                         getModBlock("hollow_oak_log"),
                         () -> WoodTypeRegistry.OAK_TYPE,
-                        (w) -> new HollowLogBlock(shortenedId() + "/" + w.getAppendableId(),
+                        w -> new HollowLogBlock(shortenedId() + "/" + w.getAppendableId(),
                                 w.log, null, w.canBurn()))
                 .requiresChildren("stripped_log") // Texture
                 .setTabKey(tab)
@@ -231,7 +233,7 @@ public class QuarkModule extends SimpleModule {
                         VariantChestsModule.class,
                         getModBlock("oak_chest", VariantChestBlock.class),
                         () -> WoodTypeRegistry.OAK_TYPE,
-                        (w) -> new CompatChestBlock(w,
+                        w -> new CompatChestBlock(w,
                                 shortenedId() + "/" + w.getAppendableId(),
                                 Utils.copyPropertySafe(w.planks)))
                 .setTabKey(tab)
@@ -251,7 +253,7 @@ public class QuarkModule extends SimpleModule {
                         VariantChestsModule.class,
                         getModBlock("oak_trapped_chest", VariantTrappedChestBlock.class),
                         () -> WoodTypeRegistry.OAK_TYPE,
-                        (w) -> {
+                        w -> {
                             boolean isNamespaceLoaded = w.getNamespace().equals("twilightforest")
                                     || w.getNamespace().equals("blue_skies");
                             if (!chests.blocks.containsKey(w) && !isNamespaceLoaded) return null;
@@ -276,7 +278,7 @@ public class QuarkModule extends SimpleModule {
                         HedgesModule.class,
                         getModBlock("oak_hedge"),
                         () -> LeavesTypeRegistry.OAK_TYPE,
-                        (w) -> new HedgeBlock("", null, Blocks.OAK_FENCE, w.leaves)
+                        leavesType -> new HedgeBlock("", null, Blocks.OAK_FENCE, leavesType.leaves)
                 )
                 .requiresChildren("leaves") // Reason: RECIPES
                 .addModelTransform(m -> m.replaceWithTextureFromChild("minecraft:block/oak_leaves",
@@ -299,9 +301,9 @@ public class QuarkModule extends SimpleModule {
                         LeafCarpetModule.class,
                         getModBlock("oak_leaf_carpet"),
                         () -> LeavesTypeRegistry.OAK_TYPE,
-                        (w) -> {
-                            String name = shortenedId() + "/" + w.getVariantId("%s_leaf_carpet");
-                            return new LeafCarpetBlock(name, w.leaves, null);
+                        leavesType -> {
+                            String name = shortenedId() + "/" + leavesType.getVariantId("%s_leaf_carpet");
+                            return new LeafCarpetBlock(name, leavesType.leaves, null);
                         })
                 .requiresChildren("leaves") // Reason: RECIPES
                 .addModelTransform(m -> m.replaceWithTextureFromChild("minecraft:block/oak_leaves",
