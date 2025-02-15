@@ -41,6 +41,9 @@ public class HardcodedBlockType {
 
 
             /// ========== INCLUDE ========== \\\
+        // Minecraft's CHERRY prevent the generation of blocks with Terraqueous's CHERRY
+        if (isWoodRegistryOf("", "", "", "terraqueous:cherry", "")) return false;
+
         // Quark's blocks with Caverns-And-Chasms' AZALEA aren't generated due to Quark's AZALEA
         if (isWoodRegistryOf("quark", "", "caverns_and_chasms", "", "")) return false;
 
