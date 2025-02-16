@@ -1,11 +1,18 @@
 ### UPDATED:
-- **SpirteHelper** (COMMON): Added Eternal Tales to fix the _hedge_'s missing texture via **Macaw's Fences & Walls**
-- **Tropicraft** (COMMON): Improved the code to fix the *boardwalk*s' missing texture with **Productive Trees** and other wood mods
-- **Refurbished Furniture** (COMMON): Fixed the _table_ not being generated with **Dawn Of Time**'s _waxed_oak_ & Also fixed the missing particle texture shown in log
 - **Chipped** (COMMON): 
-  - Added the missing BlockEntity to _barrels_ & _crates_
-  - Tweaked the Palette stuff to remove (the code, `.matchSize()` blc it's buggy 
-- **Valhelsia Structure** (FORGE): Fixed the crash when stripping either cut_post or post - related to [#785](https://github.com/MehVahdJukaar/WoodGood/issues/785)
+  - Improved the Palette stuff for texture
+  - Fixed [#]() _trapdoor_ not dropping when broken
+- **Clutter** (FABRIC): Updated to support *v0.6.0+* & Fixed [#800](https://github.com/MehVahdJukaar/WoodGood/issues/800) - Missing Texture for _cupboards_ & _wall_cupboards_
+- **EveryCompat** (COMMON): Fixed **Architect's Palette**'s _boards_ not being generated with **Abnormal's mods (Upgrade Aquatic and others)** - [#803](https://github.com/MehVahdJukaar/WoodGood/issues/803)
+
+### ADDED:
+- **EveryCompat** (COMMON): Exception for a new compat mod: 
+  - **Macaw's Oh The Biomes You'll Go / We've Gone**
+  - **Macaw's Biomes O' Plenty**
+- **TEXTURE** (COMMON): Created windows texture for **Create** with **Ecologics** - @chipsams
+
+### EXCLUDED:
+- **QUark** (FORGE): _stripped_flowering_azalea_post_ with **Ecologics** - related to [#808](https://github.com/MehVahdJukaar/WoodGood/issues/808) 
 
 ---
 
