@@ -1,6 +1,5 @@
 package net.mehvahdjukaar.every_compat.modules.decorative_blocks;
 
-
 import com.mojang.datafixers.util.Pair;
 import lilypuree.decorative_blocks.blocks.types.WoodDecorativeBlockTypes;
 import lilypuree.decorative_blocks.core.DBBlocks;
@@ -40,8 +39,7 @@ public class DecorativeBlocksModule extends SimpleModule {
 
     public DecorativeBlocksModule(String modId) {
         super(modId, "db");
-
-        ResourceLocation tab = modRes(modId);
+        ResourceLocation tab = modRes("general");
 
         beams = SimpleEntrySet.builder(WoodType.class, "beam",
                         getModBlock("oak_beam"), () -> WoodTypeRegistry.OAK_TYPE,
