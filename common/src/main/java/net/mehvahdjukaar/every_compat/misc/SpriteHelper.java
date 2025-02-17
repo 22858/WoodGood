@@ -44,6 +44,9 @@ public class SpriteHelper {
         addOptional("minecraft:mushroom_stem", "_side", "minecraft:block/mushroom_stem");
         addOptional("minecraft:mushroom_stem", "_top", "minecraft:block/mushroom_stem");
 
+        // Rainbow Oaks Renewed
+        addOptional("rainbowoaks:rainbow_leaves", "_leaves", "minecraft:block/oak_leaves");
+
         // Cultural Delights
             // Leaves
         addOptional("culturaldelights:fruiting_avocado_leaves", "_leaves", "culturaldelights:block/fruiting_avocado_leaves_0");
@@ -108,7 +111,7 @@ public class SpriteHelper {
         addOptional("eternal_tales:stripped_khagris_log", "_top", "eternal_tales:block/khagris_log_stripped_top_new");
         addOptional("eternal_tales:purgatorium_log", "_side", "eternal_tales:block/purgatorium_log_new");
         addOptional("eternal_tales:purgatorium_log", "_top", "eternal_tales:block/purglogtop");
-        addOptional("eternal_tales:purgatorium_stripped_log", "_side", "eternal_tales:block/purgatorium_stripped_log_new"); //TODO: Add to Moonlight
+        addOptional("eternal_tales:purgatorium_stripped_log", "_side", "eternal_tales:block/purgatorium_stripped_log_new");
         addOptional("eternal_tales:purgatorium_stripped_log", "_top", "eternal_tales:block/purgatorium_log_stripped_top_new");
         addOptional("eternal_tales:petrified_log", "_side", "eternal_tales:block/petrifiedlogside");
         addOptional("eternal_tales:petrified_log", "_top", "eternal_tales:block/petrifiedlogtop");
@@ -118,12 +121,13 @@ public class SpriteHelper {
         addOptional("eternal_tales:mandarin_orange_log", "_top", "eternal_tales:block/mandarinlogtop");
         addOptional("eternal_tales:comets_log", "_side", "eternal_tales:block/comets_log_new");
         addOptional("eternal_tales:comets_log", "_top", "eternal_tales:block/cometswoodtop");
-        addOptional("eternal_tales:striped_comets_log", "_side", "eternal_tales:block/comets_log_stripped_new"); //TODO: add to Moonlight
+        addOptional("eternal_tales:striped_comets_log", "_side", "eternal_tales:block/comets_log_stripped_new");
         addOptional("eternal_tales:striped_comets_log", "_top", "eternal_tales:block/comets_log_stripped_top_new");
 
         // Biomes O' Plenty
             // Leaves
         addOptional("biomesoplenty:null_leaves", "_leaves", "biomesoplenty:block/null_overlay");
+        addOptional("biomesoplenty:snowblossom_leaves", "_leaves", "biomesoplenty:block/snowblossom_leaves");
 
         // Environmental
         addOptional("environmental:pink_wisteria_leaves", "_leaves", "environmental:block/pink_wisteria_leaves");
@@ -491,7 +495,7 @@ public class SpriteHelper {
                     temp.close();
 
                 } catch (Exception e) {
-                    EveryCompat.LOGGER.error("failed to open the texture for: ", e);
+                    EveryCompat.LOGGER.error("Failed to process {}'s texture: {}", path, e);
                 }
             }
         }
@@ -514,7 +518,7 @@ public class SpriteHelper {
                     temp.close();
 
                 } catch (Exception e) {
-                    EveryCompat.LOGGER.warn("failed to apply vine for strangewood: {} and image {}", woodType, image);
+                    EveryCompat.LOGGER.warn("Failed to apply vineOverlay for strangewood texture: {}", String.valueOf(e));
                 }
             }
         }
