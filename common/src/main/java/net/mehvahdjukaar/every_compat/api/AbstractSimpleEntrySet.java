@@ -29,7 +29,6 @@ import net.mehvahdjukaar.moonlight.api.set.wood.WoodType;
 import net.mehvahdjukaar.moonlight.api.util.Utils;
 import net.mehvahdjukaar.moonlight.api.util.math.colors.RGBColor;
 import net.mehvahdjukaar.moonlight.core.misc.McMetaFile;
-import net.minecraft.client.resources.metadata.animation.AnimationMetadataSection;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -427,10 +426,10 @@ public abstract class AbstractSimpleEntrySet<T extends BlockType, B extends Bloc
     }
 
     //post process some textures.
-    public Supplier<TextureImage> postProcessTexture(T wood, String newId, ResourceManager manager,
+    public Supplier<TextureImage> postProcessTexture(T blockType, String newId, ResourceManager manager,
                                                      Supplier<TextureImage> textureSupplier) {
-        if (wood.getClass() == WoodType.class) {
-            var changed = SpriteHelper.maybePostProcessWoodTexture((WoodType) wood, newId, manager, textureSupplier);
+        if (blockType.getClass() == WoodType.class) {
+            var changed = SpriteHelper.maybePostProcessWoodTexture((WoodType) blockType, newId, manager, textureSupplier);
             if (changed != null) {
                 return changed;
             }
