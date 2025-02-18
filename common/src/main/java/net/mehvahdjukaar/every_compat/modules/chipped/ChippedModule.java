@@ -1890,8 +1890,16 @@ public class ChippedModule extends SimpleModule {
     }
 
     private void dullLuminance(Palette p) {
+        for (int i = 0; i < 8; i++) {
+            p.increaseInner();
+        }
+        p.remove(p.getDarkest(1));
+        for (int i = 0; i < 4; i++) {
+            p.reduceUp();
+        }
         p.reduceDown();
-        p.changeSizeMatchingLuminanceSpan(0.25F);
+        p.reduceDown();
+        p.matchLuminanceStep(0.0256F);
     }
 
     private void darkerPalette(Palette p) {
