@@ -71,7 +71,7 @@ dependencies {
 //    modRuntimeOnly("curse.maven:athena-841890:5176880") // Chipped
 //    modRuntimeOnly("curse.maven:resourceful-lib-570073:5659872") //v2.1.29 | Chipped, Handcrafted, Cozy
 
-            //- OTHER MAVENsj
+            //- OTHER MAVENS
     modRuntimeOnly("net.jodah:typetools:0.6.3") // BOP
 //    modRuntimeOnly("com.tterrag.registrate_fabric:Registrate:${registrate_fabric_version}")
 //    modRuntimeOnly("com.jozufozu.flywheel:flywheel-forge-${flywheel_version}") // Create
