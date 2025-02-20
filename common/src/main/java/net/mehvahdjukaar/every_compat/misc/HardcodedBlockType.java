@@ -24,6 +24,9 @@ public class HardcodedBlockType {
         shortenedIdenfity = shortenedId;
 
             /// ========== EXCLUDE ========== \\\
+        // Nature's-Spirit's joshua texture is a 8x8, it's currently excluded in Valhelaia-Structure for now - the texture generation could be improved
+        if (isWoodRegistryOf("valhelsia_structures", "", "natures_spirit:joshua", "", "")) return true;
+
         // Discarding Dynamic Trees and its addons
         if (isWoodRegistryOf("", "", "dynamictrees|dt", "", "")) return true;
 
