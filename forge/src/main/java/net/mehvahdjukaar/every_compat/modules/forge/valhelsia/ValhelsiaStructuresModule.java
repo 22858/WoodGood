@@ -83,6 +83,7 @@ public class ValhelsiaStructuresModule extends SimpleModule {
                         getModBlock("cut_stripped_oak_post"), () -> WoodTypeRegistry.OAK_TYPE,
                         w -> new CutPostBlock(cutPostProperties(w))
                 )
+                .requiresFromMap(strippedPosts.blocks) //REASON: recipes
                 .requiresChildren("stripped_log") //REASON: textures
                 //TEXTURES: manual generation (BELOW)
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
@@ -99,6 +100,7 @@ public class ValhelsiaStructuresModule extends SimpleModule {
                         getModBlock("cut_oak_post"), () -> WoodTypeRegistry.OAK_TYPE,
                         w -> new CompatCutPostBlock(cutPostProperties(w), w)
                 )
+                .requiresFromMap(posts.blocks) //REASON: recipes
                 //TEXTURES: manual generation (BELOW)
                 .addTag(modRes("cut_posts"), Registries.BLOCK)
                 .addTag(modRes("cut_posts"), Registries.ITEM)
@@ -113,6 +115,7 @@ public class ValhelsiaStructuresModule extends SimpleModule {
                         getModBlock("bundled_stripped_oak_posts"), () -> WoodTypeRegistry.OAK_TYPE,
                         w -> new RotatedPillarBlock(bundledPostProperties(w))
                 )
+                .requiresFromMap(strippedPosts.blocks) //REASON: recipes
                 .requiresChildren("stripped_log") //REASON: textures
                 //TEXTURES: manual generation (BELOW)
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
@@ -125,7 +128,8 @@ public class ValhelsiaStructuresModule extends SimpleModule {
                         getModBlock("bundled_oak_posts"), () -> WoodTypeRegistry.OAK_TYPE,
                         w -> new StrippableRotatedPillarBlock(() -> bundledStrippedPosts.blocks.get(w), bundledPostProperties(w))
                 )
-                .requiresFromMap(bundledStrippedPosts.blocks)
+                .requiresFromMap(posts.blocks) //REASON: recipes
+                .requiresFromMap(bundledStrippedPosts.blocks) //REASON: strippable_block
                 //TEXTURES: manual generation (BELOW)
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .setTabKey(tab)
@@ -183,7 +187,7 @@ public class ValhelsiaStructuresModule extends SimpleModule {
                     handler.addTextureIfNotPresent(manager, newId + "_top", () -> newTop);
 
                 } catch (Exception e) {
-                    handler.getLogger().error("Failed to generate Post block texture for for {} : {}", block, e);
+                    handler.getLogger().error("Failed to generate Post texture for for {} : {}", block, e);
 
                 }
 
@@ -210,12 +214,12 @@ public class ValhelsiaStructuresModule extends SimpleModule {
                     handler.addTextureIfNotPresent(manager, newId + "_top", () -> newTop);
 
                 } catch (Exception e) {
-                    handler.getLogger().error("Failed to generate Stripped Post block texture for for {} : {}", block, e);
+                    handler.getLogger().error("Failed to generate Stripped-Post texture for {} : {}", block, e);
 
                 }
             });
         } catch (Exception ex) {
-            handler.getLogger().error("Could not generate any Table block texture : ", ex);
+            handler.getLogger().error("Could not generate block texture: ", ex);
         }
 
         // bundled_<type>_posts' TEXTURES ------------------------------------------------------------------------------
