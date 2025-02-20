@@ -44,8 +44,9 @@ public class MacawStairsModule extends SimpleModule {
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .setTabKey(tab)
                 .defaultRecipe()
-                //REASON: take a look at their //TEXTURES, you'll see why. Excluded!
-                .addCondition(w -> !w.getId().toString().matches("terrestria:(sakura|yucca_palm)|betternether:(nether_mushroom|nether_reed)"))
+                //REASON: take a look at their //TEXTURES, you'll see why.
+                .excludeBlockTypes("terrestria:(sakura|yucca_palm)|betternether:(nether_mushroom|nether_reed)")
+                .excludeBlockTypes("betternether:(nether_mushroom|nether_reed)")
                 .build();
         this.addEntry(terrace_stairs);
 
@@ -59,8 +60,9 @@ public class MacawStairsModule extends SimpleModule {
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .setTabKey(tab)
                 .defaultRecipe()
-                //REASON: take a look at their //TEXTURES, you'll see why. Excluded!
-                .addCondition(w -> !w.getId().toString().matches("terrestria:(sakura|yucca_palm)|betternether:(nether_mushroom|nether_reed)"))
+                //REASON: take a look at their //TEXTURES, you'll see why.
+                .excludeBlockTypes("terrestria:(sakura|yucca_palm)|betternether:(nether_mushroom|nether_reed)")
+                .excludeBlockTypes("betternether:(nether_mushroom|nether_reed)")
                 .build();
         this.addEntry(skyline_stairs);
 
@@ -74,8 +76,9 @@ public class MacawStairsModule extends SimpleModule {
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .setTabKey(tab)
                 .defaultRecipe()
-                //REASON: take a look at their //TEXTURES, you'll see why. Excluded!
-                .addCondition(w -> !w.getId().toString().matches("terrestria:(sakura|yucca_palm)|betternether:(nether_mushroom|nether_reed)"))
+                //REASON: take a look at their //TEXTURES, you'll see why.
+                .excludeBlockTypes("terrestria:(sakura|yucca_palm)|betternether:(nether_mushroom|nether_reed)")
+                .excludeBlockTypes("betternether:(nether_mushroom|nether_reed)")
                 .build();
         this.addEntry(compact_stairs);
 
@@ -89,8 +92,9 @@ public class MacawStairsModule extends SimpleModule {
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .setTabKey(tab)
                 .defaultRecipe()
-                //REASON: take a look at their //TEXTURES, you'll see why. Excluded!
-                .addCondition(w -> !w.getId().toString().matches("terrestria:(sakura|yucca_palm)|betternether:(nether_mushroom|nether_reed)"))
+                //REASON: take a look at their //TEXTURES, you'll see why.
+                .excludeBlockTypes("terrestria:(sakura|yucca_palm)|betternether:(nether_mushroom|nether_reed)")
+                .excludeBlockTypes("betternether:(nether_mushroom|nether_reed)")
                 .build();
         this.addEntry(bulk_stairs);
 
@@ -104,8 +108,9 @@ public class MacawStairsModule extends SimpleModule {
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .setTabKey(tab)
                 .defaultRecipe()
-                //REASON: take a look at their //TEXTURES, you'll see why. Excluded!
-                .addCondition(w -> !w.getId().toString().matches("terrestria:(sakura|yucca_palm)|betternether:(nether_mushroom|nether_reed)"))
+                //REASON: take a look at their //TEXTURES, you'll see why.
+                .excludeBlockTypes("terrestria:(sakura|yucca_palm)|betternether:(nether_mushroom|nether_reed)")
+                .excludeBlockTypes("betternether:(nether_mushroom|nether_reed)")
                 .build();
         this.addEntry(loft_stairs);
 
@@ -119,8 +124,9 @@ public class MacawStairsModule extends SimpleModule {
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .setTabKey(tab)
                 .defaultRecipe()
-                //REASON: take a look at their //TEXTURES, you'll see why. Excluded!
-                .addCondition(w -> !w.getId().toString().matches("terrestria:(sakura|yucca_palm)|betternether:(nether_mushroom|nether_reed)"))
+                //REASON: take a look at their //TEXTURES, you'll see why.
+                .excludeBlockTypes("terrestria:(sakura|yucca_palm)|betternether:(nether_mushroom|nether_reed)")
+                .excludeBlockTypes("betternether:(nether_mushroom|nether_reed)")
                 .build();
         this.addEntry(balconies);
 
@@ -135,8 +141,9 @@ public class MacawStairsModule extends SimpleModule {
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .setTabKey(tab)
                 .defaultRecipe()
-                //REASON: take a look at their //TEXTURES, you'll see why. Excluded!
-                .addCondition(w -> !w.getId().toString().matches("terrestria:(sakura|yucca_palm)|betternether:(nether_mushroom|nether_reed)"))
+                //REASON: take a look at their //TEXTURES, you'll see why.
+                .excludeBlockTypes("terrestria:(sakura|yucca_palm)|betternether:(nether_mushroom|nether_reed)")
+                .excludeBlockTypes("betternether:(nether_mushroom|nether_reed)")
                 .build();
         this.addEntry(railings);
 
@@ -150,8 +157,9 @@ public class MacawStairsModule extends SimpleModule {
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .setTabKey(tab)
                 .defaultRecipe()
-                //REASON: take a look at their //TEXTURES, you'll see why. Excluded!
-                .addCondition(w -> !w.getId().toString().matches("terrestria:(sakura|yucca_palm)|betternether:(nether_mushroom|nether_reed)"))
+                //REASON: take a look at their //TEXTURES, you'll see why.
+                .excludeBlockTypes("terrestria:(sakura|yucca_palm)|betternether:(nether_mushroom|nether_reed)")
+                .excludeBlockTypes("betternether:(nether_mushroom|nether_reed)")
                 .build();
         this.addEntry(platforms);
 
