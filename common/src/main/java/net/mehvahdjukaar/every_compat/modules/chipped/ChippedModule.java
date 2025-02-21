@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import net.mehvahdjukaar.every_compat.EveryCompat;
 import net.mehvahdjukaar.every_compat.api.*;
 import net.mehvahdjukaar.every_compat.dynamicpack.ServerDynamicResourcesHandler;
+import net.mehvahdjukaar.every_compat.misc.SpriteHelper;
 import net.mehvahdjukaar.moonlight.api.resources.ResType;
 import net.mehvahdjukaar.moonlight.api.resources.SimpleTagBuilder;
 import net.mehvahdjukaar.moonlight.api.resources.pack.DynamicDataPack;
@@ -33,6 +34,10 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePrope
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.List;
+import java.util.Objects;
+
+import static net.mehvahdjukaar.every_compat.api.AbstractSimpleEntrySet.makePaletteFromChild;
+import static net.mehvahdjukaar.every_compat.common_classes.Utilities.areColorsSimilar;
 
 //TODO:
 // Mcmeta files are not copied from the base block
@@ -354,7 +359,7 @@ public class ChippedModule extends SimpleModule {
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .addTag(BlockTags.PLANKS, Registries.BLOCK)
                 .addTag(ItemTags.PLANKS, Registries.ITEM)
-                .createPaletteFromPlanks(this::dullLuminance)
+                .createPaletteFromPlanks(this::dullLuminance)  //TODO
                 .setTabKey(tab)
                 .build();
         this.addEntry(doubleHerringbonePlanks);
@@ -422,7 +427,7 @@ public class ChippedModule extends SimpleModule {
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .addTag(BlockTags.PLANKS, Registries.BLOCK)
                 .addTag(ItemTags.PLANKS, Registries.ITEM)
-                .createPaletteFromPlanks(this::dullLuminance)
+//                .createPaletteFromPlanks(this::dullLuminance) //TODO
                 .setTabKey(tab)
                 .build();
         this.addEntry(herringbonePlanks);
@@ -502,25 +507,12 @@ public class ChippedModule extends SimpleModule {
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .addTag(BlockTags.PLANKS, Registries.BLOCK)
                 .addTag(ItemTags.PLANKS, Registries.ITEM)
-                .createPaletteFromPlanks(p -> {
-                    p.reduceDown();
-                    PaletteColor darker = p.getDarkest().getLightened();
-                    p.reduceDown();
-                    PaletteColor dark = p.getDarkest().getLightened();
-                    p.reduceDown();
-                    if (p.size() < 10) {
-                        while (p.size() < 10) {
-                            p.increaseInner();
-                        }
-                    }
-                    else {
-                        while (p.size() > 8) {
-                            p.reduce();
-                        }
-                    }
-                    p.add(dark);
-                    p.add(darker);
-                })
+//                .createPaletteFromPlanks(this::polishedPalette) //todo
+
+                .useChildPaletteOrAlt(
+                        p -> {}, "stripped_log", SpriteHelper.LOOKS_LIKE_SIDE_LOG_TEXTURE,
+                        this::polishedPalette, "planks", null
+                )
                 .setTabKey(tab)
                 .build();
         this.addEntry(polishedPlanks);
@@ -555,7 +547,7 @@ public class ChippedModule extends SimpleModule {
                 .addTag(BlockTags.MINEABLE_WITH_AXE, Registries.BLOCK)
                 .addTag(BlockTags.PLANKS, Registries.BLOCK)
                 .addTag(ItemTags.PLANKS, Registries.ITEM)
-                .createPaletteFromPlanks(this::dullLuminance)
+                .createPaletteFromPlanks(this::dullLuminance)  //TODO
                 .setTabKey(tab)
                 .build();
         this.addEntry(slantedPlanks);
@@ -1890,21 +1882,42 @@ public class ChippedModule extends SimpleModule {
     }
 
     private void dullLuminance(Palette p) {
-        for (int i = 0; i < 8; i++) {
-            p.increaseInner();
+        while (p.size() < 8) p.increaseInner(); // necessary due to fewer than 7 paletteColors
+        if (p.size() < 16) { // Not necessary for more than 16
+            for (int i = 0; i < 8; i++) {
+                p.increaseInner();
+            }
+            for (int i = 0; i < 4; i++) {
+                p.reduceUp();
+            }
+            p.reduceDown();
+            p.reduceDown();
         }
-        p.remove(p.getDarkest(1));
-        for (int i = 0; i < 4; i++) {
-            p.reduceUp();
-        }
-        p.reduceDown();
-        p.reduceDown();
-        p.matchLuminanceStep(0.0256F);
+    }
+
+    private void polishedPalette(Palette p) {
+            p.reduceDown();
+            PaletteColor darker = p.getDarkest().getLightened();
+            p.reduceDown();
+            PaletteColor dark = p.getDarkest().getLightened();
+            p.reduceDown();
+            if (p.size() < 10) {
+                while (p.size() < 10) {
+                    p.increaseInner();
+                }
+            }
+            else {
+                while (p.size() > 8) {
+                    p.reduce();
+                }
+            }
+            p.add(dark);
+            p.add(darker);
     }
 
     private void darkerPalette(Palette p) {
-        p.remove(p.getDarkest());
-        p.remove(p.getLightest());
+        p.reduceDown();
+        p.reduceUp();
     }
 
     private void darkPalette(Palette p) {
@@ -1916,19 +1929,19 @@ public class ChippedModule extends SimpleModule {
         p.increaseInner();
         p.increaseInner();
         p.increaseInner();
-        p.remove(p.getLightest());
-        p.remove(p.getLightest());
-        p.remove(p.getDarkest());
+        p.reduceUp();
+        p.reduceUp();
+        p.reduceDown();
     }
 
     private void panelPalette(Palette p) {
-        p.remove(p.getDarkest());
+        p.reduceDown();
         p.increaseInner();
-        p.remove(p.getDarkest());
+        p.reduceDown();
         p.increaseInner();
-        p.remove(p.getDarkest());
+        p.reduceDown();
         p.increaseInner();
-        p.remove(p.getLightest());
+        p.reduceUp();
     }
 
     @Override
