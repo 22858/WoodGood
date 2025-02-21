@@ -330,13 +330,13 @@ public class SpriteHelper {
         // PFW Aesthetic Gems - Idk what happened because I disabled this and the texture files couldn't be found. Below is required to fix the missing textures
         addOptional("pfw_aesthetic_gems:ice_blue_topaz_log", "_side", "pfw_aesthetic_gems:block/ice_blue_topaz_log");
         addOptional("pfw_aesthetic_gems:ice_blue_topaz_log", "_top", "pfw_aesthetic_gems:block/ice_blue_topaz_log_top");
-        addOptional("pfw_aesthetic_gems:ice_blue_topaz_stripped_log", "_side", "pfw_aesthetic_gems:block/ice_blue_topaz_stripped_log");
-        addOptional("pfw_aesthetic_gems:ice_blue_topaz_stripped_log", "_top", "pfw_aesthetic_gems:block/ice_blue_topaz_stripped_log_top");
+        addOptional("pfw_aesthetic_gems:stripped_ice_blue_topaz_log", "_side", "pfw_aesthetic_gems:block/stripped_ice_blue_topaz_log");
+        addOptional("pfw_aesthetic_gems:stripped_ice_blue_topaz_log", "_top", "pfw_aesthetic_gems:block/stripped_ice_blue_topaz_log_top");
 
         addOptional("pfw_aesthetic_gems:pink_topaz_log", "_side", "pfw_aesthetic_gems:block/pink_topaz_log");
         addOptional("pfw_aesthetic_gems:pink_topaz_log", "_top", "pfw_aesthetic_gems:block/pink_topaz_log_top");
-        addOptional("pfw_aesthetic_gems:pink_topaz_stripped_log", "_side", "pfw_aesthetic_gems:block/pink_topaz_stripped_log");
-        addOptional("pfw_aesthetic_gems:pink_topaz_stripped_log", "_top", "pfw_aesthetic_gems:block/pink_topaz_stripped_log_top");
+        addOptional("pfw_aesthetic_gems:stripped_pink_topaz_log", "_side", "pfw_aesthetic_gems:block/stripped_pink_topaz_log");
+        addOptional("pfw_aesthetic_gems:stripped_pink_topaz_log", "_top", "pfw_aesthetic_gems:block/stripped_pink_topaz_log_top");
 
     }
 
