@@ -123,6 +123,8 @@ public class SpriteHelper {
         addOptional("eternal_tales:comets_log", "_top", "eternal_tales:block/cometswoodtop");
         addOptional("eternal_tales:striped_comets_log", "_side", "eternal_tales:block/comets_log_stripped_new");
         addOptional("eternal_tales:striped_comets_log", "_top", "eternal_tales:block/comets_log_stripped_top_new");
+        addOptional("eternal_tales:carved_pure_wood", "_side", "eternal_tales:block/pure_log_carved_side");
+        addOptional("eternal_tales:carved_pure_wood", "_top", "eternal_tales:block/pure_log_carved_top");
 
         // Biomes O' Plenty
             // Leaves
