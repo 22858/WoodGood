@@ -23,7 +23,15 @@ public class HardcodedBlockType {
         supportedBlockName = blockName;
         shortenedIdenfity = shortenedId;
 
+            /// ========== INCLUDE VANILLA TYPE ========== \\\
+        // Dawn-Of-Time's fancy-fence only has birch but no other vanilla variants
+        if (isWoodRegistryOf("dawnoftimebuilder", "", "", "minecraft:(oak|acacia|jungle|dark_oak|spruce|mangrove|cherry)", "fancy_fence")) return false;
+
+
             /// ========== EXCLUDE ========== \\\
+        // Exclude all of Vanilla Types
+        if (woodType.isVanilla()) return true;
+
         // Nature's-Spirit's joshua texture is a 8x8, it's currently excluded in Valhelaia-Structure for now - the texture generation could be improved
         if (isWoodRegistryOf("valhelsia_structures", "", "natures_spirit:joshua", "", "")) return true;
 
@@ -96,6 +104,9 @@ public class HardcodedBlockType {
         shortenedIdenfity = shortenedId;
 
                 /// ========== EXCLUDE ========== \\\
+        // Exclude all of Vanilla Types
+        if (leavesType.isVanilla()) return true;
+
         // Traversable-Leaves' leaves is a testing item and should be excluded
         if (isLeavesRegistryOf("", "", "", "traversable_leaves:dev_leaves", "")) return true;
 
@@ -130,7 +141,7 @@ public class HardcodedBlockType {
         for (int idx = 0; idx < values.length; idx++ ) {
 
             if (!expressions[idx].isEmpty()) { // Skip the blank expressions
-                boolean isNotMatched = !values[idx].matches(expressions[idx]);
+                boolean isNotMatched = !(values[idx].matches(expressions[idx])|values[idx].contains(expressions[idx]));
                 if (isNotMatched) return false;
             }
         }
@@ -159,7 +170,7 @@ public class HardcodedBlockType {
         for (int idx = 0; idx < values.length; idx++ ) {
 
             if (!expressions[idx].isEmpty()) { // Skip the blank expressions
-                boolean isNotMatched = !values[idx].matches(expressions[idx]);
+                boolean isNotMatched = !(values[idx].matches(expressions[idx])|values[idx].contains(expressions[idx]));
                 if (isNotMatched) return false;
             }
         }
