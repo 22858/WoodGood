@@ -92,7 +92,7 @@ public class SpriteHelper {
 
         // Blue Skies
             // Leaves
-        addOptional("blue_skies:comet_leaves","_leaves","blue_skies:block/comet_leaves_grown");
+        addOptional("blue_skies:comet_leaves","_leaves","blue_skies:block/leaves/comet_leaves_grown");
 
         // Aether Redux
             // Leaves
@@ -104,8 +104,8 @@ public class SpriteHelper {
 
         // Malum
             // Leaves
-        addOptional("malum:budding_soulwood_leaves","_leaves","malum:block/soulwood_leaves");
-        addOptional("malum:azure_runewood_leaves","_leaves","malum:block/runewood_leaves");
+        addOptional("malum:budding_soulwood_leaves","_leaves","malum:block/soulwood/budding_soulwood_leaves");
+        addOptional("malum:azure_runewood_leaves","_leaves","malum:block/runewood/azure_runewood_leaves");
 
         // Oh The Biomes We've Gone
             // Leaves
