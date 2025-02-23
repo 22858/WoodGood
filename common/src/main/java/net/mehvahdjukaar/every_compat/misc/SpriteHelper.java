@@ -44,6 +44,35 @@ public class SpriteHelper {
         addOptional("minecraft:mushroom_stem","_side","minecraft:block/mushroom_stem");
         addOptional("minecraft:mushroom_stem","_top","minecraft:block/mushroom_stem");
 
+        // Promenade
+        addOptional("promenade:sakura_log","_side","promenade:block/sakura/log/side");
+        addOptional("promenade:sakura_log","_top","promenade:block/sakura/log/top");
+        addOptional("promenade:stripped_sakura_log","_side","promenade:block/sakura/stripped_log/side");
+        addOptional("promenade:stripped_sakura_log","_top","promenade:block/sakura/stripped_log/top");
+
+        addOptional("promenade:dark_amaranth_log","_side","promenade:block/dark_amaranth/log/side");
+        addOptional("promenade:dark_amaranth_log","_top","promenade:block/dark_amaranth/log/top");
+        addOptional("promenade:stripped_dark_amaranth_log","_side","promenade:block/dark_amaranth/stripped_log/side");
+        addOptional("promenade:stripped_dark_amaranth_log","_top","promenade:block/dark_amaranth/stripped_log/top");
+
+        addOptional("promenade:palm_log","_side","promenade:block/palm/log/side");
+        addOptional("promenade:palm_log","_top","promenade:block/palm/log/top");
+        addOptional("promenade:stripped_palm_log","_side","promenade:block/palm/stripped_log/side");
+        addOptional("promenade:stripped_palm_log","_top","promenade:block/palm/stripped_log/top");
+
+        addOptional("promenade:maple_log","_side","promenade:block/maple/log/side");
+        addOptional("promenade:maple_log","_top","promenade:block/maple/log/top");
+        addOptional("promenade:stripped_maple_log","_side","promenade:block/maple/stripped_log/side");
+        addOptional("promenade:stripped_maple_log","_top","promenade:block/maple/stripped_log/top");
+
+        addOptional("promenade:sakura_planks","_side","promenade:block/sakura/planks");
+        addOptional("promenade:dark_amaranth_planks","_side","promenade:block/dark_amaranth/planks");
+        addOptional("promenade:palm_planks","_side","promenade:block/palm/planks");
+        addOptional("promenade:maple_planks","_side","promenade:block/maple/planks");
+
+        // Simple Mango
+        addOptional("simplemango:mango_log","_top","simplemango:block/mango_log_horizontal");
+
         // Rainbow Oaks Renewed
         addOptional("rainbowoaks:rainbow_leaves","_leaves","minecraft:block/oak_leaves");
 
