@@ -129,6 +129,7 @@ dependencies {
     modCompileOnly("curse.maven:architects-palette-fabric-487364:3845046") //!! NOT AVAILABLE
     modCompileOnly("curse.maven:beautify-refabricated-809311:5405529")
     modCompileOnly("curse.maven:bewitchment-394915:5205373")
+    modCompileOnly("curse.maven:building-but-better-989479:5382599")
     modCompileOnly("curse.maven:clutter-826060:5828924") //RML: Geckolib
     modCompileOnly("curse.maven:create-fabric-624165:5245234") //v0.5.1f
     modCompileOnly("curse.maven:dramatic-doors-380617:6115857")
